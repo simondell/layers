@@ -5,8 +5,39 @@
 - Work is tracked in `tasks/` as numbered markdown files
 - Each task becomes a branch and a PR — never commit feature work directly to `main`
 - Branch naming: `<type>/<number>_<description>` mirroring the conventional commit type e.g. `feat/001_scaffold_services`
-- All commit messages must follow **conventional commits** format: `<type>: <description>`
-  - Common types: `feat`, `fix`, `chore`, `docs`, `test`, `ci`, `refactor`
+
+## Commit messages
+
+All commit messages must follow **conventional commits** format:
+
+```
+<type>: <short description>
+
+[optional body]
+```
+
+Common types: `feat`, `fix`, `chore`, `docs`, `test`, `ci`, `refactor`
+
+## Code style
+
+### C#
+
+- ASP.NET Core Minimal API only — no controllers, no classes for route registration
+- Top-level statements throughout — routes registered inline on `app`:
+  ```csharp
+  var builder = WebApplication.CreateBuilder(args);
+  builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+  var app = builder.Build();
+  app.MapGet("/route", () => ...);
+  app.Run();
+  ```
+- Named `HttpClient` registrations for inter-service calls — never `new HttpClient()`
+- Leaf service URLs from configuration, not hardcoded
+
+### General
+
+- No commented-out code
+- No speculative abstractions — solve the problem at hand
 
 ## Project overview
 
@@ -38,16 +69,14 @@ A number is **in** if `number > day_score`, where day_score is the sum of alphab
 ## Tech stack
 
 - **Frontend:** plain HTML, CSS, vanilla JS — no framework, no build step
-- **Backend:** C# .NET 8, ASP.NET Core Minimal API
+- **Backend:** C# .NET 10, ASP.NET Core Minimal API
 - **Lambda packaging:** `Amazon.Lambda.AspNetCoreServer.Hosting` — same binary runs locally (Kestrel) and on AWS (Lambda). No Docker, no SAM.
 - **Infrastructure:** Terraform — `infra/modules/lambda-service/` is a reusable module instantiated once per service
 - **CI:** GitHub Actions — `ci.yml` (build + test) and `tf-plan.yml` (terraform plan on PRs)
 - **Testing:** xUnit + `WebApplicationFactory` for in-process integration tests
 
-## C# conventions
+## Configuration
 
-- Use ASP.NET Core Minimal API (not controllers)
-- Register named `HttpClient` instances for inter-service calls — never `new HttpClient()`
 - Leaf service URLs come from configuration (`Services__Numbers__BaseUrl`, `Services__EsmeSqualor__BaseUrl`) so they work locally and in Lambda without code changes
 
 ## AWS
