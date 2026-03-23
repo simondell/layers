@@ -1,0 +1,23 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.userprefs
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfplan
+*.tfvars
+!terraform.tfvars.example
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
