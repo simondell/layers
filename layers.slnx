@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/services/" />
+  <Folder Name="/services/esme_squalor/">
+    <Project Path="services/esme_squalor/EsmeSqualor.csproj" />
+  </Folder>
+  <Folder Name="/services/esme_squalor/Tests/">
+    <Project Path="services/esme_squalor/Tests/EsmeSqualor.Tests.csproj" />
+  </Folder>
+  <Folder Name="/services/numbers/">
+    <Project Path="services/numbers/Numbers.csproj" />
+  </Folder>
+  <Folder Name="/services/numbers/Tests/">
+    <Project Path="services/numbers/Tests/Numbers.Tests.csproj" />
+  </Folder>
+  <Folder Name="/services/orchestrator/">
+    <Project Path="services/orchestrator/Orchestrator.csproj" />
+  </Folder>
+  <Folder Name="/services/orchestrator/Tests/">
+    <Project Path="services/orchestrator/Tests/Orchestrator.Tests.csproj" />
+  </Folder>
+</Solution>

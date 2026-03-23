@@ -4,7 +4,7 @@
 
 - Work is tracked in `tasks/` as numbered markdown files
 - Each task becomes a branch and a PR — never commit feature work directly to `main`
-- Branch naming: `task/<number>-<short-description>` e.g. `task/001-scaffold-services`
+- Branch naming: `<type>/<number>_<description>` mirroring the conventional commit type e.g. `feat/001_scaffold_services`
 - All commit messages must follow **conventional commits** format: `<type>: <description>`
   - Common types: `feat`, `fix`, `chore`, `docs`, `test`, `ci`, `refactor`
 
