@@ -23,5 +23,3 @@ static int DayScore(DayOfWeek day) => day switch
     DayOfWeek.Sunday    => 54,
     _ => throw new ArgumentOutOfRangeException(nameof(day))
 };
-
-public partial class Program { }
