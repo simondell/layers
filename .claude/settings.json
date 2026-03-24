@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git:*)",
+      "Bash(dotnet:*)",
+      "Bash(gh:*)",
+      "Bash(curl:*)",
+      "Bash(aws:*)",
+      "Bash(terraform:*)",
+      "Bash(sam:*)",
+      "Bash(cd:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(jq:*)"
+    ]
+  }
+}
