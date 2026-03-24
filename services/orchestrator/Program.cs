@@ -40,5 +40,3 @@ app.Run();
 
 record NumberResponse(int Value);
 record VerdictResponse(string Verdict);
-
-public partial class Program { }
