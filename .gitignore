@@ -6,6 +6,9 @@ obj/
 .vs/
 *.userprefs
 
+# Build output
+build/
+
 # Terraform
 .terraform/
 *.tfstate
