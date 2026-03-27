@@ -2,7 +2,7 @@
 set -e
 
 ROOT="$(cd "$(dirname "$0")" && pwd)"
-PUBLISH_FLAGS="-c Release -r linux-x64 --self-contained -p:AssemblyName=bootstrap --nologo -v quiet"
+PUBLISH_FLAGS="-c Release --nologo -v quiet"
 
 services=("numbers" "esme_squalor" "orchestrator")
 

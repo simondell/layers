@@ -10,3 +10,5 @@ app.MapGet("/number", () =>
 });
 
 app.Run();
+
+public partial class Program { }

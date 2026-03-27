@@ -14,18 +14,21 @@ provider "aws" {
 module "numbers" {
   source       = "./modules/lambda-service"
   service_name = "layers-numbers"
+  handler      = "Numbers"
   zip_path     = "${path.root}/../build/numbers.zip"
 }
 
 module "esme_squalor" {
   source       = "./modules/lambda-service"
   service_name = "layers-esme-squalor"
+  handler      = "EsmeSqualor"
   zip_path     = "${path.root}/../build/esme_squalor.zip"
 }
 
 module "orchestrator" {
   source       = "./modules/lambda-service"
   service_name = "layers-orchestrator"
+  handler      = "Orchestrator"
   zip_path     = "${path.root}/../build/orchestrator.zip"
 
   environment_variables = {
