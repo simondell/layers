@@ -22,7 +22,7 @@ resource "aws_lambda_function" "service" {
   source_code_hash = filebase64sha256(var.zip_path)
   role             = aws_iam_role.lambda.arn
   handler          = var.handler
-  runtime          = "dotnet8"
+  runtime          = "dotnet10"
 
   environment {
     variables = var.environment_variables

@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace Numbers.Tests;
 
-public class TestFactory : WebApplicationFactory<Program> { }
-
-public class NumbersTests(TestFactory factory) : IClassFixture<TestFactory>
+public class NumbersTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client = factory.CreateClient();
 

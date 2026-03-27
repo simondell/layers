@@ -24,4 +24,3 @@ static int DayScore(DayOfWeek day) => day switch
     _ => throw new ArgumentOutOfRangeException(nameof(day))
 };
 
-public partial class Program { }

@@ -2,9 +2,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 
 namespace EsmeSqualor.Tests;
 
-public class TestFactory : WebApplicationFactory<Program> { }
-
-public class VerdictTests(TestFactory factory) : IClassFixture<TestFactory>
+public class VerdictTests(WebApplicationFactory<Program> factory) : IClassFixture<WebApplicationFactory<Program>>
 {
     private readonly HttpClient _client = factory.CreateClient();
 
