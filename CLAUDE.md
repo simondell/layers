@@ -2,9 +2,9 @@
 
 ## Workflow
 
-- Work is tracked in `tasks/` as numbered markdown files
-- Each task becomes a branch and a PR — never commit feature work directly to `main`
-- Branch naming: `<type>/<number>_<description>` mirroring the conventional commit type e.g. `feat/001_scaffold_services`
+- Work is tracked as GitHub issues (see [Issues](https://github.com/simondell/layers/issues))
+- Each issue becomes a branch and a PR — never commit feature work directly to `main`
+- Branch naming: `<type>/<number>_<description>` mirroring the conventional commit type, e.g. `feat/004_frontend_ui`
 
 ## Commit messages
 
