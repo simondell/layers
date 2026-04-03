@@ -9,7 +9,7 @@ variable "zip_path" {
 }
 
 variable "handler" {
-  description = "Lambda handler — assembly name for managed dotnet8 runtime"
+  description = "Lambda handler — assembly name for managed dotnet10 runtime"
   type        = string
 }
 
