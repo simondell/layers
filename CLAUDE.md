@@ -88,8 +88,6 @@ A number is **in** if `number > day_score`, where day_score is the sum of alphab
 
 ## AWS
 
-- Region: `eu-west-2` (London)
-- IAM user: `simon`
 - Each Lambda gets its own API Gateway v2 (HTTP API)
 - Orchestrator receives the leaf service URLs as Lambda environment variables, injected by Terraform outputs
 - Frontend hosted on S3 static website — bucket managed by Terraform
