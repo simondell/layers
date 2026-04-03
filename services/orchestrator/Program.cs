@@ -11,12 +11,12 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddHttpClient("numbers", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["Services__Numbers__BaseUrl"] ?? "http://localhost:5001");
+    client.BaseAddress = new Uri(builder.Configuration["Services:Numbers:BaseUrl"] ?? "http://localhost:5001");
 });
 
 builder.Services.AddHttpClient("esme_squalor", client =>
 {
-    client.BaseAddress = new Uri(builder.Configuration["Services__EsmeSqualor__BaseUrl"] ?? "http://localhost:5002");
+    client.BaseAddress = new Uri(builder.Configuration["Services:EsmeSqualor:BaseUrl"] ?? "http://localhost:5002");
 });
 
 var app = builder.Build();

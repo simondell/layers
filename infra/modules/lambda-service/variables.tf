@@ -18,3 +18,15 @@ variable "environment_variables" {
   type        = map(string)
   default     = {}
 }
+
+variable "timeout" {
+  description = "Lambda function timeout in seconds"
+  type        = number
+  default     = 30
+}
+
+variable "memory_size" {
+  description = "Lambda function memory in MB"
+  type        = number
+  default     = 256
+}

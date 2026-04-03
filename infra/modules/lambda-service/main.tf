@@ -23,6 +23,8 @@ resource "aws_lambda_function" "service" {
   role             = aws_iam_role.lambda.arn
   handler          = var.handler
   runtime          = "dotnet10"
+  timeout          = var.timeout
+  memory_size      = var.memory_size
 
   environment {
     variables = var.environment_variables
