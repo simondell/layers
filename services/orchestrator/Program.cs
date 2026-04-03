@@ -1,5 +1,13 @@
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        var origins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>() ?? [];
+        policy.WithOrigins(origins);
+    });
+});
 
 builder.Services.AddHttpClient("numbers", client =>
 {
@@ -12,6 +20,7 @@ builder.Services.AddHttpClient("esme_squalor", client =>
 });
 
 var app = builder.Build();
+app.UseCors();
 
 app.MapGet("/result", async (int count, IHttpClientFactory httpClientFactory) =>
 {
