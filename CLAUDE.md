@@ -41,7 +41,7 @@ Common types: `feat`, `fix`, `chore`, `docs`, `test`, `ci`, `refactor`
 
 ## Project overview
 
-A learning project. Plain JS frontend, three C# .NET 8 backend services deployed as AWS Lambdas, infrastructure managed with Terraform, CI via GitHub Actions.
+A learning project. Plain JS frontend hosted on S3, three C# .NET 10 backend services deployed as AWS Lambdas, infrastructure managed with Terraform, CI via GitHub Actions.
 
 ### Services
 
@@ -68,20 +68,28 @@ A number is **in** if `number > day_score`, where day_score is the sum of alphab
 
 ## Tech stack
 
-- **Frontend:** plain HTML, CSS, vanilla JS — no framework, no build step
+- **Frontend:** plain HTML, CSS, vanilla JS — no framework. Hosted on S3 static website. Terraform handles upload and orchestrator URL injection via `replace()`.
 - **Backend:** C# .NET 10, ASP.NET Core Minimal API
 - **Lambda packaging:** `Amazon.Lambda.AspNetCoreServer.Hosting` — same binary runs locally (Kestrel) and on AWS (Lambda). No Docker, no SAM.
-- **Infrastructure:** Terraform — `infra/modules/lambda-service/` is a reusable module instantiated once per service
+- **Infrastructure:** Terraform (AWS provider `~> 6.27`) — `infra/modules/lambda-service/` is a reusable module instantiated once per service. Lambda timeout 30s, memory 256MB.
 - **CI:** GitHub Actions — `ci.yml` (build + test) and `tf-plan.yml` (terraform plan on PRs)
 - **Testing:** xUnit + `WebApplicationFactory` for in-process integration tests
 
 ## Configuration
 
-- Leaf service URLs come from configuration (`Services__Numbers__BaseUrl`, `Services__EsmeSqualor__BaseUrl`) so they work locally and in Lambda without code changes
+- Leaf service URLs read from configuration using **colon separators**: `Services:Numbers:BaseUrl`, `Services:EsmeSqualor:BaseUrl`. ASP.NET Core normalises `__` env var names to `:` internally — code must use the colon form.
+- CORS allowed origins configured via `Cors:AllowedOrigins` — `appsettings.Development.json` for local dev (`http://localhost:8080`), Lambda env var for production (S3 URL injected by Terraform).
+- Local frontend development: serve `frontend/` on port 8080 (e.g. `python -m http.server 8080`)
+
+## Build and deploy
+
+- `./build.sh` — publishes all three services as zips in `build/`
+- `cd infra && terraform apply` — deploys Lambdas, API Gateways, S3 frontend, and uploads frontend files with orchestrator URL injected
 
 ## AWS
 
 - Region: `eu-west-2` (London)
-- IAM user: `learning_terraform`
+- IAM user: `simon`
 - Each Lambda gets its own API Gateway v2 (HTTP API)
 - Orchestrator receives the leaf service URLs as Lambda environment variables, injected by Terraform outputs
+- Frontend hosted on S3 static website — bucket managed by Terraform
