@@ -24,3 +24,9 @@ Thumbs.db
 # IDE
 .idea/
 .vscode/
+.sublime-settings
+.sublime-workspace
+
+# claude/agents
+settings.local.json
+
