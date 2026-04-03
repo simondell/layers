@@ -9,7 +9,7 @@ variable "zip_path" {
 }
 
 variable "handler" {
-  description = "Lambda handler — assembly name for managed dotnet8 runtime"
+  description = "Lambda handler — assembly name for managed dotnet10 runtime"
   type        = string
 }
 
@@ -17,4 +17,16 @@ variable "environment_variables" {
   description = "Environment variables for the Lambda function"
   type        = map(string)
   default     = {}
+}
+
+variable "timeout" {
+  description = "Lambda function timeout in seconds"
+  type        = number
+  default     = 30
+}
+
+variable "memory_size" {
+  description = "Lambda function memory in MB"
+  type        = number
+  default     = 256
 }
