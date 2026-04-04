@@ -11,7 +11,8 @@
       "Bash(cd:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "Bash(jq:*)"
+      "Bash(jq:*)",
+      "Bash(gh issue *)"
     ]
   }
 }

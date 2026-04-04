@@ -75,26 +75,3 @@ resource "aws_s3_bucket_policy" "frontend" {
   })
 }
 
-resource "aws_s3_object" "frontend_html" {
-  bucket       = aws_s3_bucket.frontend.id
-  key          = "index.html"
-  source       = "${path.root}/../frontend/index.html"
-  etag         = filemd5("${path.root}/../frontend/index.html")
-  content_type = "text/html"
-}
-
-resource "aws_s3_object" "frontend_js" {
-  bucket       = aws_s3_bucket.frontend.id
-  key          = "app.js"
-  content      = replace(
-    file("${path.root}/../frontend/app.js"),
-    "http://localhost:5000",
-    trimsuffix(module.orchestrator.invoke_url, "/")
-  )
-  etag         = md5(replace(
-    file("${path.root}/../frontend/app.js"),
-    "http://localhost:5000",
-    trimsuffix(module.orchestrator.invoke_url, "/")
-  ))
-  content_type = "application/javascript"
-}
