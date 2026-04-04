@@ -5,7 +5,8 @@ var app = builder.Build();
 
 app.MapGet("/verdict", (int number) =>
 {
-    var dayScore = DayScore(DateTime.UtcNow.DayOfWeek);
+    var mood = Random.Shared.Next(-15, 16);
+    var dayScore = DayScore(DateTime.UtcNow.DayOfWeek) + mood;
     var verdict = number > dayScore ? "in" : "out";
     return Results.Ok(new { verdict });
 });
