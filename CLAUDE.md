@@ -68,11 +68,15 @@ A number is **in** if `number > day_score`, where day_score is the sum of alphab
 
 ## Tech stack
 
-- **Frontend:** plain HTML, CSS, vanilla JS — no framework. Hosted on S3 static website. Terraform handles upload and orchestrator URL injection via `replace()`.
+- **Frontend:** plain HTML, CSS, vanilla JS — no framework. Hosted on S3 static website. Orchestrator URL injected by `cd.yml` at deploy time via `sed`.
 - **Backend:** C# .NET 10, ASP.NET Core Minimal API
 - **Lambda packaging:** `Amazon.Lambda.AspNetCoreServer.Hosting` — same binary runs locally (Kestrel) and on AWS (Lambda). No Docker, no SAM.
-- **Infrastructure:** Terraform (AWS provider `~> 6.27`) — `infra/modules/lambda-service/` is a reusable module instantiated once per service. Lambda timeout 30s, memory 256MB.
-- **CI:** GitHub Actions — `ci.yml` (build + test) and `tf-plan.yml` (terraform plan on PRs)
+- **Infrastructure:** Terraform (AWS provider `~> 6.27`) — `infra/modules/lambda-service/` is a reusable module instantiated once per service. Lambda timeout 30s, memory 256MB. Terraform does **not** manage frontend file uploads — that is `cd.yml`'s responsibility.
+- **CI/CD:** GitHub Actions — four workflows:
+  - `ci.yml` — build + test on every PR
+  - `tf-plan.yml` — terraform plan on PRs touching `infra/**`, posts output as PR comment
+  - `infra.yml` — terraform apply on merge to main when `infra/**` changes
+  - `cd.yml` — build, deploy Lambdas, upload frontend on merge to main when `services/**` or `frontend/**` changes
 - **Testing:** xUnit + `WebApplicationFactory` for in-process integration tests
 
 ## Configuration
@@ -84,7 +88,14 @@ A number is **in** if `number > day_score`, where day_score is the sum of alphab
 ## Build and deploy
 
 - `./build.sh` — publishes all three services as zips in `build/`
-- `cd infra && terraform apply` — deploys Lambdas, API Gateways, S3 frontend, and uploads frontend files with orchestrator URL injected
+- `cd infra && terraform apply` — provisions/updates AWS infrastructure (Lambdas, API Gateways, S3 bucket). Does **not** upload frontend files or Lambda code — those are handled by `cd.yml` on merge.
+- On merge to main, GitHub Actions handles deployment automatically:
+  - `infra.yml` applies any Terraform changes
+  - `cd.yml` builds and deploys Lambda zips, then uploads frontend with the live orchestrator URL substituted into `app.js`
+
+## Teardown
+
+See [issue #26](https://github.com/simondell/layers/issues/26) for full teardown instructions (destroy infra, remove GitHub secrets, delete IAM user/policy).
 
 ## AWS
 
